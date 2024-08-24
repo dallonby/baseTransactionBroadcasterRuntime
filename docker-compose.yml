@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  basebroadcast:
+    container_name: basebroadcast
+    image: dallonby/basebroadcast:latest
+    restart: always
+    environment:
+      - PORT=3030
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    environment:
+      - WATCHTOWER_CLEANUP=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ~/.docker/config.json:/config.json
+    command: --interval 30 basebroadcast
+
